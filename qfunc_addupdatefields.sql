@@ -2,14 +2,14 @@
     Function qfunc_addupdatefields. Adds columns to table for writing
     username that had changed current row, his ipaddres, date of changing.
     Creates trigger intended to write information to columns with trigger
-    procedure public.log_update().
+    procedure logger.log_update().
 */
 
--- FUNCTION: public.qfunc_addupdatefields(character varying, character varying, boolean)
+-- FUNCTION: logger.qfunc_addupdatefields(character varying, character varying, boolean)
 
--- DROP FUNCTION public.qfunc_addupdatefields(character varying, character varying, boolean);
+-- DROP FUNCTION logger.qfunc_addupdatefields(character varying, character varying, boolean);
 
-CREATE OR REPLACE FUNCTION public.qfunc_addupdatefields(
+CREATE OR REPLACE FUNCTION logger.qfunc_addupdatefields(
 	schema_name character varying,
 	table_name character varying,
 	status boolean)
@@ -42,7 +42,7 @@ BEGIN
                   BEFORE INSERT OR UPDATE
                   ON '||$1||'.'||$2||'
                   FOR EACH ROW
-                  EXECUTE PROCEDURE public.log_update();';
+                  EXECUTE PROCEDURE logger.log_update();';
  
         WHEN status = FALSE THEN
             EXECUTE 'DROP TRIGGER IF EXISTS '||$2||'_log_update_trigger ON '||$1||'.'||$2||';';
@@ -55,5 +55,5 @@ END;
 
 $BODY$;
 
-ALTER FUNCTION public.qfunc_addupdatefields(character varying, character varying, boolean)
+ALTER FUNCTION logger.qfunc_addupdatefields(character varying, character varying, boolean)
     OWNER TO postgres;

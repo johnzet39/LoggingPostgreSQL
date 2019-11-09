@@ -10,12 +10,9 @@
 
 -- DROP FUNCTION logger.log_logger();
 
-CREATE FUNCTION logger.log_logger()
-    RETURNS trigger
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE NOT LEAKPROOF 
-AS $BODY$
+CREATE OR REPLACE FUNCTION logger.log_logger()
+  RETURNS trigger AS
+$BODY$
 
 /* 
 Элементарный аудит изменений атрибутов таблицы
@@ -34,6 +31,7 @@ new_val varchar(2000);
 
 BEGIN
 
+    
     execute 'SELECT 1 from geometry_columns gc where gc.f_table_schema = '''|| TG_TABLE_SCHEMA || ''' and  gc.f_table_name = '''|| TG_TABLE_NAME || ''' limit 1' into geom_column;
 
     -- если таблица без графики
@@ -206,7 +204,8 @@ EXCEPTION
 
 END;
 
-$BODY$;
-
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
 ALTER FUNCTION logger.log_logger()
-    OWNER TO postgres;
+  OWNER TO postgres;

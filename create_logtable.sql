@@ -26,20 +26,20 @@ GRANT ALL ON SCHEMA logger TO PUBLIC;
 
 CREATE TABLE logger.logtable
 (
-    gid integer NOT NULL DEFAULT nextval('logger.logtable_gid_seq'::regclass),
-    action text COLLATE pg_catalog."default" NOT NULL,
-    username text COLLATE pg_catalog."default" NOT NULL,
-    address text COLLATE pg_catalog."default" NOT NULL,
-    timechange timestamp without time zone NOT NULL,
-    tablename text COLLATE pg_catalog."default" NOT NULL,
-    context text COLLATE pg_catalog."default",
-    geom_polygon geometry,
-    geom_line geometry,
-    geom_point geometry,
-    gidnum integer,
-    query text COLLATE pg_catalog."default",
-    tableschema text COLLATE pg_catalog."default",
-    CONSTRAINT logger_edit_pkey1 PRIMARY KEY (gid)
+  gid integer NOT NULL DEFAULT nextval('logger.logtable_gid_seq'::regclass),
+  action text NOT NULL,
+  username text NOT NULL,
+  address text NOT NULL,
+  timechange timestamp without time zone NOT NULL,
+  tablename text NOT NULL,
+  context text,
+  geom_polygon geometry,
+  geom_line geometry,
+  geom_point geometry,
+  gidnum integer,
+  query text,
+  tableschema text,
+  CONSTRAINT logger_edit_pkey1 PRIMARY KEY (gid)
 )
 WITH (
     OIDS = FALSE

@@ -4,11 +4,11 @@
     with trigger procedure logger.log_logger()
 */
 
--- FUNCTION: public.qfunc_loglogger(character varying, character varying, boolean)
+-- FUNCTION: logger.qfunc_loglogger(character varying, character varying, boolean)
 
--- DROP FUNCTION public.qfunc_loglogger(character varying, character varying, boolean);
+-- DROP FUNCTION logger.qfunc_loglogger(character varying, character varying, boolean);
 
-CREATE OR REPLACE FUNCTION public.qfunc_loglogger(
+CREATE OR REPLACE FUNCTION logger.qfunc_loglogger(
 	schema_name character varying,
 	table_name character varying,
 	status boolean)
@@ -39,5 +39,5 @@ END;
 
 $BODY$;
 
-ALTER FUNCTION public.qfunc_loglogger(character varying, character varying, boolean)
+ALTER FUNCTION logger.qfunc_loglogger(character varying, character varying, boolean)
     OWNER TO postgres;
